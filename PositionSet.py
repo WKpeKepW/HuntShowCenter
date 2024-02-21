@@ -1,7 +1,7 @@
 import keyboard as keyb
-import win32gui as ui
+from win32 import win32gui
 class PositionSet:
-    __windowMode = False
+    __windowMode = True
     __firstTab = True
     
     def __init__(self, keyValue, defPos, chgPos, handler):
@@ -25,9 +25,9 @@ class PositionSet:
         #    self.__firstTab = False
         #el
         if self.__windowMode:#chgPos
-            ui.MoveWindow(self.handler,self.chgPos[0],self.chgPos[1],self.chgPos[2],self.chgPos[3],True)#0-7,0-1,1933,1080 default
+            win32gui.MoveWindow(self.handler,self.chgPos[0],self.chgPos[1],self.chgPos[2],self.chgPos[3],True)#0-7,0-1,1933,1080 default
         else:#defPos
-            ui.MoveWindow(self.handler,self.defPos[0],self.defPos[1],self.defPos[2],self.defPos[3],True)
+            win32gui.MoveWindow(self.handler,self.defPos[0],self.defPos[1],self.defPos[2],self.defPos[3],True)
         self.__windowMode = not self.__windowMode
         print(self.__windowMode)
-        print(ui.GetWindowRect(self.handler))
+        print(win32gui.GetWindowRect(self.handler))

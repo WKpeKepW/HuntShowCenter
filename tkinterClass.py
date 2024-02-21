@@ -1,6 +1,7 @@
 import tkinter as tk
 import PositionSet as PS
-import win32gui as ui
+from win32 import win32gui
+#import win32gui as ui
 class tkinterClass:
     def __init__(self):
         window = tk.Tk()
@@ -17,18 +18,19 @@ class tkinterClass:
         self.btn.config(command=self.__FindProc)
         self.labelStart.place(x=5,y=10)
         self.labelKey.place(x=5,y=40)
-        self.btn.place(x=150,y=10)
-        self.text.place(x=150,y=40)
+        self.btn.place(x=160,y=10)
+        self.text.place(x=160,y=40)
         window.mainloop()
     
     def __FindProc(self):
-        handler = ui.FindWindow(self.programmName,None) #ищем процесс
+        #handler = win32gui.FindWindow(None, self.programmName) #ищем процесс prod
+        handler = win32gui.FindWindow(self.programmName, None) #debuge
         if handler == 0:
             self.labelStart.config(text=self.programmName+' не запущен')
         else:
             self.labelStart.config(text=self.programmName+' запущен')
             self.btn.config(state=['disabled'])
-            pos = ui.GetWindowRect(handler)# берём его текущую позицию //плохо работает
+            pos = win32gui.GetWindowRect(handler)# берём его текущую позицию //плохо работает
             print(pos)
             PS.PositionSet('p',[0,0,1920,1080],[0,-107,1920,1080],handler)
             #[-7,-101,pos[2],pos[3]]
