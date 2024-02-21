@@ -30,8 +30,10 @@ class tkinterClass:
         else:
             self.labelStart.config(text=self.programmName+' запущен')
             self.btn.config(state=['disabled'])
-            pos = win32gui.GetWindowRect(handler)# берём его текущую позицию //плохо работает
-            print(pos)
-            PS.PositionSet('p',[0,0,1920,1080],[0,-107,1920,1080],handler)
-            #[-7,-101,pos[2],pos[3]]
-    
+            self.__ChangePos(handler)
+
+    def __ChangePos(self,handler):
+        pos = win32gui.GetWindowRect(handler)# берём его текущую позицию //плохо работает
+        print(pos)
+        PS.PositionSet('p',[0,0,1920,1080],[0,-100,1920,1180],handler)#не меняет разрешение выше разрешения вашего монитора, может изменить если есть другой монитор ниже основного 
+        #[-7,-101,pos[2],pos[3]]
