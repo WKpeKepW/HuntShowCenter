@@ -3,14 +3,14 @@ from win32 import win32gui
 from win32 import win32api
 import pywintypes
 import win32con
+from ConfigClass import Config
 class PositionSet:
     __windowMode = True
-    __firstTab = True
+    #__firstTab = True
     
-    def __init__(self, keyValue, defPos, chgPos, handler):
+    def __init__(self, defPos, chgPos, handler):
         #from main import programmName
         #self.programmName = programmName
-        self.keyValue = keyValue
         self.defPos = defPos
         self.chgPos = chgPos
         self.handler = handler
@@ -18,11 +18,12 @@ class PositionSet:
 
 
     def keyEvent(self):
-        keyb.on_press_key(self.keyValue,lambda _:self.moveWindow())
+        #keyb.on_press_key(Config.getConf('keybind'),lambda _:self.__moveWindow())
+        keyb.on_press_key(Config.getConf('keybindO'),lambda _:self.ChgResolution())
         #print(win32api.EnumDisplayDevices())
         #self.ChgResolution(1920,1180)
 
-    def moveWindow(self):
+    def __moveWindow(self):
         if self.handler == 0:
             return
         #if self.__windowMode and self.__firstTab:
@@ -39,10 +40,7 @@ class PositionSet:
         print(self.__windowMode)
         print(win32gui.GetWindowRect(self.handler))
 
-    def ChgResolution(self, width, height):
-        devmode = pywintypes.DEVMODEType()
-        devmode.PelsWidth = width
-        devmode.PelsHeight = height
-        devmode.Fields = win32con.DM_PELSWIDTH | win32con.DM_PELSHEIGHT
-        win32api.ChangeDisplaySettings(devmode, 0)
+    def ChgResolution(self, width = 1600, height = 900):
+        #print("yes")
+        win32api.SendMessage(self.handler,win32con.WM_DISPLAYCHANGE,None, width | height)
         
