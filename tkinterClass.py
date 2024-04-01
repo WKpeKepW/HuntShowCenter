@@ -6,18 +6,43 @@ class tkinterClass:
     def __init__(self):
         self.window = tk.Tk()
         self.window.title('HuntShowCenter')
-        self.window.geometry('200x70')
+        self.window.geometry('280x100')
         self.window.resizable(False,False)
         self.labelStart = tk.Label(text="Hunt: Showdown не запущен")
-        labelKey = tk.Label(text="Кнопка включения")
-        self.text = tk.Entry(width=5)
-        self.text.insert(0, Config.getConf('keybind'))
-        self.text.bind("<KeyRelease>",self.__keyBind)
+        labelBind = tk.Label(text="Кнопка включения:")
+        labelSizeDisplay = tk.Label(text="Размер монитора:")
+        labelWidth = tk.Label(text="Ширина:")
+        labelHeight = tk.Label(text="Высота:")
+        labelStep = tk.Label(text="Отклонение:")
+        self.textBind = tk.Entry(width=5)
+        self.textWidth = tk.Entry(width=7)
+        self.textHeight = tk.Entry(width=7)
+        self.textStep = tk.Entry(width=4)
+
+        self.config = Config()
+        self.textWidth.insert(0, self.config.getConf('width'))
+        self.textHeight.insert(0, self.config.getConf('height'))
+        self.textBind.insert(0, self.config.getConf('keybind'))
+        self.textStep.insert(0,self.config.getConf('step'))
+        self.textBind.bind("<KeyRelease>",lambda e: self.__keySet("keybind",self.textBind,2))
+        self.textWidth.bind("<KeyRelease>",lambda e: self.__keySet("width",self.textWidth,5))
+        self.textHeight.bind("<KeyRelease>",lambda e: self.__keySet("height",self.textHeight,5))
+        self.textStep.bind("<KeyRelease>",lambda e: self.__keySet("step",self.textStep,5))
+
         self.labelStart.place(x=5,y=10)
-        labelKey.place(x=5,y=40)
-        self.text.place(x=160,y=40)
-        self.wp = WorkProc()
+        labelSizeDisplay.place(x=5,y=58)
+        labelBind.place(x=5,y=39)
+        self.textBind.place(x=120,y=40)
+        labelWidth.place(x=5,y=78)
+        self.textWidth.place(x=60,y=80)
+        labelHeight.place(x=110,y=78)
+        self.textHeight.place(x=160,y=80)
+        labelStep.place(x=160,y=39)
+        self.textStep.place(x=240,y=40)
+
+        self.wp = WorkProc(self.config)#Изменения при перезапуке
         self.__update()
+        self.window.protocol("WM_DELETE_WINDOW", self.__exit)
         self.window.mainloop()
     
     def __update(self):
@@ -27,9 +52,12 @@ class tkinterClass:
             self.labelStart.config(text='Hunt: Showdown запущен')
             self.wp.ChangePos()
 
-    def __keyBind(self, e):
-        print(len(self.text.get()))
-        if len(self.text.get()) >= 2:
-            self.text.delete(1)
-        elif len(self.text.get()) != 0:
-            Config.setConf('keybind',self.text.get())
+    def __keySet(self, confKey, textEntry, maxdigit):
+        if len(textEntry.get()) >= maxdigit:
+            textEntry.delete(len(textEntry.get())-1)
+        elif len(textEntry.get()) != 0:
+            self.config.setConf(confKey, textEntry.get())
+
+    def __exit(self):
+        self.config.exitSave()
+        self.window.destroy()

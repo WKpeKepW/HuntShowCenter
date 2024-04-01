@@ -18,8 +18,8 @@ class PositionSet:
 
 
     def keyEvent(self):
-        #keyb.on_press_key(Config.getConf('keybind'),lambda _:self.__moveWindow())
-        keyb.on_press_key(Config.getConf('keybindO'),lambda _:self.ChgResolution())
+        keyb.on_press_key(Config.getConf('keybind'),lambda _:self.__moveWindow())
+        #keyb.on_press_key(Config.getConf('keybind'),lambda _:self.ChgResolution())
         #print(win32api.EnumDisplayDevices())
         #self.ChgResolution(1920,1180)
 

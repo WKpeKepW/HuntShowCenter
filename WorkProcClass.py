@@ -1,12 +1,15 @@
 import PositionSet as PS
 from win32 import win32gui
-from ConfigClass import Config
 class WorkProc:
-    def __init__(self):
+    def __init__(self, config):
         self.handler = 0
-
+        self.width = config.getConf("width")
+        self.height = config.getConf("height")
+        self.progname = config.getConf("programmName")
+        self.step = config.getConf("step")
+ 
     def FindProc(self) -> bool:
-        if Config.getConf('programmName') == 'Hunt: Showdown':
+        if self.progname == 'Hunt: Showdown':
             self.handler = win32gui.FindWindow(None, "Hunt: Showdown") #ищем процесс prod
         else:
             self.handler = win32gui.FindWindow("notepad", None) #debuge
@@ -22,7 +25,7 @@ class WorkProc:
             #self.__ChangePos(handler)
 
     def ChangePos(self):
-        pos = win32gui.GetWindowRect(self.handler)# берём его текущую позицию //плохо работает
+        pos = win32gui.GetWindowRect(self.handler)# берём его текущую позицию //плохо работает 2560x1440
         print(pos)
-        PS.PositionSet([0,0,1920,1080],[0,-100,1920,1180],self.handler)#не меняет разрешение выше разрешения вашего монитора, может изменить если есть другой монитор ниже основного 
+        PS.PositionSet([0,0,self.widht,self.height],[0,self.step,self.widht,self.height],self.handler)#не меняет разрешение выше разрешения вашего монитора, может изменить если есть другой монитор ниже основного 
         #[-7,-101,pos[2],pos[3]]

@@ -1,20 +1,23 @@
 import json
 class Config():
-    
-    @staticmethod
-    def getConf(Key):
-        with open("config.json") as f:
-            conf = json.load(f)
-        for key, value in conf.items():
+    def __init__(self) -> None:
+        self.path = "config.json"
+        #self.path = "_internal\config.json"
+        with open(self.path) as f:
+            self.conf = json.load(f)
+
+
+    def getConf(self, Key):
+        for key, value in self.conf.items():
             if key == Key:
                 return value
             
-    @staticmethod
-    def setConf(Key, Value):
-        with open("config.json") as f:
-            conf = json.load(f)
-        for key, value in conf.items():
+
+    def setConf(self, Key, Value):
+        for key, value in self.conf.items():
             if key == Key:
-                conf[key] = Value
-        with open("config.json","w") as f:
-            json.dump(conf, f)
+                self.conf[key] = Value
+
+    def exitSave(self):
+        with open(self.path,"w") as f:
+            json.dump(self.conf, f)
