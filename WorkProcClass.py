@@ -7,6 +7,7 @@ class WorkProc:
         self.height = config.getConf("height")
         self.progname = config.getConf("programmName")
         self.step = config.getConf("step")
+        self.keybind = config.getConf("keybind")
  
     def FindProc(self) -> bool:
         if self.progname == 'Hunt: Showdown':
@@ -27,5 +28,5 @@ class WorkProc:
     def ChangePos(self):
         pos = win32gui.GetWindowRect(self.handler)# берём его текущую позицию //плохо работает 2560x1440
         print(pos)
-        PS.PositionSet([0,0,self.widht,self.height],[0,self.step,self.widht,self.height],self.handler)#не меняет разрешение выше разрешения вашего монитора, может изменить если есть другой монитор ниже основного 
+        PS.PositionSet([0,0,int(self.width),int(self.height)],[0,int(self.step),int(self.width),int(self.height)],self.handler,self.keybind)#не меняет разрешение выше разрешения вашего монитора, может изменить если есть другой монитор ниже основного 
         #[-7,-101,pos[2],pos[3]]

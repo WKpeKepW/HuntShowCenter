@@ -1,24 +1,23 @@
 import keyboard as keyb
 from win32 import win32gui
 from win32 import win32api
-import pywintypes
 import win32con
-from ConfigClass import Config
 class PositionSet:
     __windowMode = True
     #__firstTab = True
     
-    def __init__(self, defPos, chgPos, handler):
+    def __init__(self, defPos, chgPos, handler,keybind):
         #from main import programmName
         #self.programmName = programmName
         self.defPos = defPos
         self.chgPos = chgPos
         self.handler = handler
+        self.keybind = keybind
         self.keyEvent()
 
 
     def keyEvent(self):
-        keyb.on_press_key(Config.getConf('keybind'),lambda _:self.__moveWindow())
+        keyb.on_press_key(self.keybind,lambda _:self.__moveWindow())
         #keyb.on_press_key(Config.getConf('keybind'),lambda _:self.ChgResolution())
         #print(win32api.EnumDisplayDevices())
         #self.ChgResolution(1920,1180)
