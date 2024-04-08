@@ -2,8 +2,9 @@ import PositionSet as PS
 import keyboard as keyb
 from win32 import win32gui
 class WorkProc:
-    def __init__(self, config):
+    def __init__(self, config, cr):
         self.handler = 0
+        self.subscribecr = cr
         self.config = config
         self.ps = None
         self.ConfigChange = False
@@ -51,4 +52,10 @@ class WorkProc:
             change = True
         if(change):
             self.__ChangePos()
+            self.updateSubscribers(True)
+        else:
+            self.updateSubscribers(False)
         self.ps.moveWindow()
+
+    def updateSubscribers(self, message):
+        self.subscribecr.update(message)
