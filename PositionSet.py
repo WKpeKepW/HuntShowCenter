@@ -1,6 +1,4 @@
-import keyboard as keyb
 from win32 import win32gui
-from win32 import win32api
 import win32con
 class PositionSet:
     __windowMode = True
@@ -13,16 +11,8 @@ class PositionSet:
         self.chgPos = chgPos
         self.handler = handler
         self.keybind = keybind
-        self.keyEvent()
 
-
-    def keyEvent(self):
-        keyb.on_press_key(self.keybind,lambda _:self.__moveWindow())
-        #keyb.on_press_key(Config.getConf('keybind'),lambda _:self.ChgResolution())
-        #print(win32api.EnumDisplayDevices())
-        #self.ChgResolution(1920,1180)
-
-    def __moveWindow(self):
+    def moveWindow(self):
         if self.handler == 0:
             return
         #if self.__windowMode and self.__firstTab:
@@ -38,8 +28,3 @@ class PositionSet:
         self.__windowMode = not self.__windowMode
         print(self.__windowMode)
         print(win32gui.GetWindowRect(self.handler))
-
-    def ChgResolution(self, width = 1600, height = 900):
-        #print("yes")
-        win32api.SendMessage(self.handler,win32con.WM_DISPLAYCHANGE,None, width | height)
-        

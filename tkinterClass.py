@@ -42,7 +42,7 @@ class tkinterClass:
 
         self.wp = WorkProc(self.config)#Изменения при перезапуке
         self.__update()
-        self.window.protocol("WM_DELETE_WINDOW", self.__exit)
+        #self.window.protocol("WM_DELETE_WINDOW", self.__exit)
         self.window.mainloop()
     
     def __update(self):
@@ -50,14 +50,15 @@ class tkinterClass:
             self.window.after(500,self.__update)
         else:
             self.labelStart.config(text='Hunt: Showdown запущен')
-            self.wp.ChangePos()
+            #self.wp.ChangePos()
 
     def __keySet(self, confKey, textEntry, maxdigit):
         if len(textEntry.get()) >= maxdigit:
             textEntry.delete(len(textEntry.get())-1)
         elif len(textEntry.get()) != 0:
             self.config.setConf(confKey, textEntry.get())
+            self.wp.ConfigChange=True
 
-    def __exit(self):
-        self.config.exitSave()
-        self.window.destroy()
+    #def __exit(self):
+    #    self.config.exitSave()
+    #    self.window.destroy()

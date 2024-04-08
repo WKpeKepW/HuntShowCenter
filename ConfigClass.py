@@ -1,11 +1,13 @@
 import json
 class Config():
     def __init__(self) -> None:
-        #self.path = "config.json"
-        self.path = "_internal\config.json"
+        self.path = "config.json" #debuge
+        #self.path = "_internal\config.json" #release
+        self.Reopen()
+
+    def Reopen(self):
         with open(self.path) as f:
             self.conf = json.load(f)
-
 
     def getConf(self, Key):
         for key, value in self.conf.items():
@@ -18,6 +20,6 @@ class Config():
             if key == Key:
                 self.conf[key] = Value
 
-    def exitSave(self):
+    def ConfigSave(self):
         with open(self.path,"w") as f:
             json.dump(self.conf, f)
