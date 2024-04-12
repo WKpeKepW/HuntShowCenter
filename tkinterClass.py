@@ -4,6 +4,12 @@ from tkinter import ttk
 from WorkProcClass import WorkProc
 from ConfigClass import Config
 from CrossHairClass import CrossHair
+from CrossHairClass2 import CrossHair2
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPainter, QColor
+from CrossHairClass3 import CrossHair3
 class tkinterClass:
     def __init__(self):
         self.window = tk.Tk()
@@ -25,7 +31,10 @@ class tkinterClass:
         crossHairsBox.current(0)#Config
 
         self.config = Config()
-        self.ch = CrossHair(self.config)
+        self.ch = CrossHair3(self.config, self.window)
+        # self.windowQT = QApplication(sys.argv)
+        # self.ch = CrossHair2(self.config)
+        # self.ch.show()
         self.textWidth.insert(0, self.config.getConf('width'))
         self.textHeight.insert(0, self.config.getConf('height'))
         self.textBind.insert(0, self.config.getConf('keybind'))
@@ -70,5 +79,5 @@ class tkinterClass:
 
     def __exit(self):
         self.config.ConfigSave()
-        self.ch.destoryAllCrossHairs()
+        #self.ch.destoryAllCrossHairs()
         self.window.destroy()
