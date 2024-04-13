@@ -1,20 +1,13 @@
 import tkinter as tk
 from tkinter import ttk
-#import win32gui as ui
 from WorkProcClass import WorkProc
 from ConfigClass import Config
-from CrossHairClass import CrossHair
-from CrossHairClass2 import CrossHair2
-import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPainter, QColor
 from CrossHairClass3 import CrossHair3
 class tkinterClass:
     def __init__(self):
         self.window = tk.Tk()
         self.window.title('HuntShowCenter')
-        self.window.geometry('280x100')
+        self.window.geometry('290x100')
         self.window.resizable(False,False)
         self.labelStart = tk.Label(text="Hunt: Showdown не запущен")
         labelBind = tk.Label(text="Кнопка включения:")
@@ -26,15 +19,14 @@ class tkinterClass:
         self.textWidth = tk.Entry(width=7)
         self.textHeight = tk.Entry(width=7)
         self.textStep = tk.Entry(width=4)
+        labelcrossHairs = tk.Label(text="Прицел:")
         crossHairsList = ["Нет","Точка","Перекрестие"]
         crossHairsBox = ttk.Combobox(values=crossHairsList,state="readonly")
         crossHairsBox.current(0)#Config
 
         self.config = Config()
         self.ch = CrossHair3(self.config, self.window)
-        # self.windowQT = QApplication(sys.argv)
-        # self.ch = CrossHair2(self.config)
-        # self.ch.show()
+
         self.textWidth.insert(0, self.config.getConf('width'))
         self.textHeight.insert(0, self.config.getConf('height'))
         self.textBind.insert(0, self.config.getConf('keybind'))
@@ -55,7 +47,8 @@ class tkinterClass:
         self.textHeight.place(x=160,y=80)
         labelStep.place(x=160,y=39)
         self.textStep.place(x=240,y=40)
-        crossHairsBox.place(x=220,y=80,width=60,height=21)
+        labelcrossHairs.place(x=210,y=58)
+        crossHairsBox.place(x=210,y=80,width=80,height=21)
 
         self.wp = WorkProc(self.config, self.ch)#Изменения при перезапуке
         self.__update()
@@ -65,10 +58,9 @@ class tkinterClass:
     
     def __update(self):
         if self.wp.FindProc() == False:
-            self.window.after(500,self.__update)
+            self.window.after(500,self.__update)#Как решение наложение прицела на приложение
         else:
             self.labelStart.config(text='Hunt: Showdown запущен')
-            #self.wp.ChangePos()
 
     def __keySet(self, confKey, textEntry, maxdigit):
         if len(textEntry.get()) >= maxdigit:
@@ -79,5 +71,4 @@ class tkinterClass:
 
     def __exit(self):
         self.config.ConfigSave()
-        #self.ch.destoryAllCrossHairs()
         self.window.destroy()

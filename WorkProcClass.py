@@ -2,9 +2,9 @@ import PositionSet as PS
 import keyboard as keyb
 from win32 import win32gui
 class WorkProc:
-    def __init__(self, config, cr):
+    def __init__(self, config, ch):
         self.handler = 0
-        self.subscribecr = cr
+        self.subscribech = ch
         self.config = config
         self.ps = None
         self.ConfigChange = False
@@ -30,17 +30,11 @@ class WorkProc:
             
         if self.handler == 0:
             return False
-            #self.labelStart.config(text=self.programmName+' не запущен')
         else:
-            #self.labelStart.config(text=self.programmName+' запущен')
             return True
-            #self.btn.config(state=['disabled'])
-            
-            #self.__ChangePos(handler)
 
     def __ChangePos(self):
         self.ps = PS.PositionSet([0,0,int(self.width),int(self.height)],[0,int(self.step),int(self.width),int(self.height)],self.handler,self.keybind)#не меняет разрешение выше разрешения вашего монитора, может изменить если есть другой монитор ниже основного 
-        #[-7,-101,pos[2],pos[3]]
 
     def keyEvent(self):
         change = False
@@ -58,4 +52,4 @@ class WorkProc:
         self.ps.moveWindow()
 
     def updateSubscribers(self, message):
-        self.subscribecr.update(message)
+        self.subscribech.update(message)
