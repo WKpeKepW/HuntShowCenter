@@ -1,8 +1,8 @@
 import json
 class Config():
     def __init__(self) -> None:
-        self.path = "config.json" #debuge
-        #self.path = "_internal\config.json" #release
+        #self.path = "config.json" #debuge
+        self.path = "_internal\config.json" #release
         self.Reopen()
 
     def Reopen(self):

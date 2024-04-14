@@ -13,9 +13,9 @@ class PositionSet:
         if self.handler == 0:
             return
         if self.__windowMode:#chgPos
-            win32gui.SetWindowPos(self.handler,win32con.HWND_TOPMOST,self.chgPos[0],self.chgPos[1],self.chgPos[2],self.chgPos[3],win32con.SWP_NOSENDCHANGING)
+            win32gui.SetWindowPos(self.handler,win32con.HWND_NOTOPMOST,self.chgPos[0],self.chgPos[1],self.chgPos[2],self.chgPos[3],win32con.SWP_NOSENDCHANGING)
         else:#defPos
-            win32gui.SetWindowPos(self.handler,win32con.HWND_TOPMOST,self.defPos[0],self.defPos[1],self.defPos[2],self.defPos[3],win32con.SWP_NOSENDCHANGING)
+            win32gui.SetWindowPos(self.handler,win32con.HWND_NOTOPMOST,self.defPos[0],self.defPos[1],self.defPos[2],self.defPos[3],win32con.SWP_NOSENDCHANGING)
         self.__windowMode = not self.__windowMode
-        print(self.__windowMode)
-        print(win32gui.GetWindowRect(self.handler))
+        #print(self.__windowMode)
+        #print(win32gui.GetWindowRect(self.handler))
