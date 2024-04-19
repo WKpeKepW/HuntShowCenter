@@ -46,7 +46,7 @@ class WorkProc:
             change = True
         if(change):
             self.__ChangePos()
-            self.updateSubscribers(True)
+            self.updateSubscribers("updateConf")
         else:
             self.updateSubscribers(False)
         self.ps.moveWindow()
